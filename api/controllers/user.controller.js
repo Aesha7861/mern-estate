@@ -4,7 +4,7 @@ import { errorHandler } from '../utils/error.js';
 
 export const test = (req, res) => {
     res.json({
-        message: 'Helloooooo!',
+        message: 'Api route is working!',
     });
 };
 
