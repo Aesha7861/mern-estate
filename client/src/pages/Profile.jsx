@@ -244,7 +244,7 @@ export default function Profile() {
         {updateSuccess ? "You updated your profile successfully!" : ""}
       </p>
 
-      <button onClick={handleShowListings} className="text-green-700 w-full ">
+      <button onClick={handleShowListings} className="text-green-700 w-full font-bold text-lg">
         Show Listings
       </button>
       <p className="text-red-600 mt-5">
@@ -285,7 +285,9 @@ export default function Profile() {
                 >
                   Delete
                 </button>
-                <button className="text-green-600 uppercase">Edit</button>
+                <Link to={`/update-listing/${listing._id}`}>
+                  <button className='text-green-700 uppercase'>Edit</button>
+                </Link>
               </div>
             </div>
           ))}
