@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   getDownloadURL,
   getStorage,
@@ -5,9 +6,8 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
-import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
@@ -19,9 +19,9 @@ export default function CreateListing() {
     description: "",
     address: "",
     type: "rent",
-    bedrooms: 3,
-    bathrooms: 2,
-    regularPrice: 5000,
+    bedrooms: 1,
+    bathrooms: 1,
+    regularPrice: 50,
     discountPrice: 0,
     offer: false,
     parking: false,
@@ -32,7 +32,6 @@ export default function CreateListing() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   console.log(formData);
-
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
@@ -52,11 +51,11 @@ export default function CreateListing() {
           setUploading(false);
         })
         .catch((err) => {
-          setImageUploadError("Image upload failed (2 mb maximum per image!)");
+          setImageUploadError("Image upload failed (2 mb max per image)");
           setUploading(false);
         });
     } else {
-      setImageUploadError("You can only upload 6 images per listing!");
+      setImageUploadError("You can only upload 6 images per listing");
       setUploading(false);
     }
   };
@@ -128,9 +127,9 @@ export default function CreateListing() {
     e.preventDefault();
     try {
       if (formData.imageUrls.length < 1)
-        return setError("You must upload at least one image.");
+        return setError("You must upload at least one image");
       if (+formData.regularPrice < +formData.discountPrice)
-        return setError("Discount price must be less than regular price.");
+        return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
       const res = await fetch("/api/listing/create", {
@@ -148,22 +147,19 @@ export default function CreateListing() {
       if (data.success === false) {
         setError(data.message);
       }
-
-        navigate(`/listing/${data._id}`)
-      
+      navigate(`/listing/${data._id}`);
     } catch (error) {
       setError(error.message);
       setLoading(false);
     }
   };
-
   return (
     <main className="p-3 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7" style={{ color: "rgb(30 65 113)"}}>
-        Create Listing
+      <h1 className="text-3xl font-semibold text-center my-7">
+        Create a Listing
       </h1>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-6">
-        <div className="flex flex-col gap-5 flex-1">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col gap-4 flex-1">
           <input
             type="text"
             placeholder="Name"
@@ -193,7 +189,6 @@ export default function CreateListing() {
             onChange={handleChange}
             value={formData.address}
           />
-
           <div className="flex gap-6 flex-wrap">
             <div className="flex gap-2">
               <input
@@ -246,7 +241,6 @@ export default function CreateListing() {
               <span>Offer</span>
             </div>
           </div>
-
           <div className="flex flex-wrap gap-6">
             <div className="flex items-center gap-2">
               <input
@@ -259,7 +253,7 @@ export default function CreateListing() {
                 onChange={handleChange}
                 value={formData.bedrooms}
               />
-              <p>Bedrooms</p>
+              <p>Beds</p>
             </div>
             <div className="flex items-center gap-2">
               <input
@@ -272,14 +266,14 @@ export default function CreateListing() {
                 onChange={handleChange}
                 value={formData.bathrooms}
               />
-              <p>Bathrooms</p>
+              <p>Baths</p>
             </div>
             <div className="flex items-center gap-2">
               <input
                 type="number"
                 id="regularPrice"
-                min="5000"
-                max="100000000"
+                min="50"
+                max="10000000"
                 required
                 className="p-3 border border-gray-300 rounded-lg"
                 onChange={handleChange}
@@ -287,7 +281,9 @@ export default function CreateListing() {
               />
               <div className="flex flex-col items-center">
                 <p>Regular price</p>
-                <span className="text-sm">(&#8377; / month)</span>
+                {formData.type === "rent" && (
+                  <span className="text-xs">($ / month)</span>
+                )}
               </div>
             </div>
             {formData.offer && (
@@ -296,7 +292,7 @@ export default function CreateListing() {
                   type="number"
                   id="discountPrice"
                   min="0"
-                  max="100000000"
+                  max="10000000"
                   required
                   className="p-3 border border-gray-300 rounded-lg"
                   onChange={handleChange}
@@ -304,13 +300,15 @@ export default function CreateListing() {
                 />
                 <div className="flex flex-col items-center">
                   <p>Discounted price</p>
-                  <span className="text-sm">(&#8377; / month)</span>
+
+                  {formData.type === "rent" && (
+                    <span className="text-xs">($ / month)</span>
+                  )}
                 </div>
               </div>
             )}
           </div>
         </div>
-
         <div className="flex flex-col flex-1 gap-4">
           <p className="font-semibold">
             Images:
@@ -331,12 +329,12 @@ export default function CreateListing() {
               type="button"
               disabled={uploading}
               onClick={handleImageSubmit}
-              className="p-3 text-green-600 border border-green-600 rounded uppercase hover:shadow-lg disabled:opacity-80"
+              className="p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
             >
               {uploading ? "Uploading..." : "Upload"}
             </button>
           </div>
-          <p className="text-red-600 text-sm">
+          <p className="text-red-700 text-sm">
             {imageUploadError && imageUploadError}
           </p>
           {formData.imageUrls.length > 0 &&
@@ -347,23 +345,25 @@ export default function CreateListing() {
               >
                 <img
                   src={url}
-                  alt="Listing image"
-                  className="w-60 h-40 object-contain rounded-lg"
+                  alt="listing image"
+                  className="w-20 h-20 object-contain rounded-lg"
                 />
                 <button
                   type="button"
                   onClick={() => handleRemoveImage(index)}
-                  className="p-3 text-red-600 rounded-lg uppercase hover:opacity-70"
+                  className="p-3 text-red-700 rounded-lg uppercase hover:opacity-75"
                 >
                   Delete
                 </button>
               </div>
             ))}
-
-          <button disabled={loading || uploading} className="p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-90 disabled:opacity-80">
+          <button
+            disabled={loading || uploading}
+            className="p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+          >
             {loading ? "Creating..." : "Create listing"}
           </button>
-          {error && <p className="text-red-600 text-sm">{error}</p>}
+          {error && <p className="text-red-700 text-sm">{error}</p>}
         </div>
       </form>
     </main>
