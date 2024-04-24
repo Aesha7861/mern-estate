@@ -104,7 +104,7 @@ export default function Listing() {
                 : listing.regularPrice.toLocaleString("en-US")}
               {listing.type === "rent" && " / month"}
             </p>
-            <p className="flex items-center mt-6 gap-2 text-slate-600 text-sm">
+            <p className="flex items-center mt-6 gap-2 text-blue-900 text-sm">
               <FaMapMarkerAlt className="text-green-700" />
               {listing.address}
             </p>
@@ -118,7 +118,7 @@ export default function Listing() {
                 </p>
               )}
             </div>
-            <p className="text-slate-800">
+            <p className="text-blue-900">
               <span className="font-semibold text-black">Description : </span>
               {listing.description}
             </p>
@@ -145,7 +145,7 @@ export default function Listing() {
               </li>
             </ul>
             {currentUser && listing.userRef !== currentUser._id && !contact &&(
-              <button onClick={() => setContact(true)} className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-90 p-3">
+              <button onClick={() => setContact(true)} className="bg-blue-900 text-white rounded-lg uppercase hover:opacity-90 p-3">
                 Contact landlord
               </button>
             )}

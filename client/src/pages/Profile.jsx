@@ -183,7 +183,7 @@ export default function Profile() {
               Error in image uploading! (image must be less than 2 mb)
             </span>
           ) : filePerc > 0 && filePerc < 100 ? (
-            <span className="text-slate-600">{`Uploading ${filePerc}%`}</span>
+            <span className="text-blue-900">{`Uploading ${filePerc}%`}</span>
           ) : filePerc === 100 ? (
             <span className="text-green-600">Image successfully uploaded!</span>
           ) : (
@@ -215,7 +215,7 @@ export default function Profile() {
         />
         <button
           disabled={loading}
-          className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-90 disabled:opacity-80"
+          className="bg-blue-900 text-white rounded-lg p-3 uppercase hover:opacity-90 disabled:opacity-80"
         >
           {loading ? "Loading..." : "Update"}
         </button>
@@ -272,7 +272,7 @@ export default function Profile() {
                 />
               </Link>
               <Link
-                className="text-slate-700 font-semibold hover:underline trancate flex-1"
+                className="text-blue-900 font-semibold hover:underline trancate flex-1"
                 to={`/listing/${listing._id}`}
               >
                 <p>{listing.name}</p>
