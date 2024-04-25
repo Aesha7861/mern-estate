@@ -100,11 +100,11 @@ export default function Listing() {
             <p className="text-2xl font-semibold">
               {listing.name} - &#8377;{" "}
               {listing.offer
-                ? listing.discountPrice.toLocaleString("en-US")
-                : listing.regularPrice.toLocaleString("en-US")}
+                ? listing.discountPrice.toLocaleString("en-IN")
+                : listing.regularPrice.toLocaleString("en-IN")}
               {listing.type === "rent" && " / month"}
             </p>
-            <p className="flex items-center mt-6 gap-2 text-blue-900 text-sm">
+            <p className="flex items-center mt-6 gap-2 text-blue-900">
               <FaMapMarkerAlt className="text-green-700" />
               {listing.address}
             </p>

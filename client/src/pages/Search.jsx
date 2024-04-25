@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import ListingItem from "../components/ListingItem";
 
 export default function Search() {
   const navigate = useNavigate();
@@ -15,17 +16,16 @@ export default function Search() {
 
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
-  console.log(listings);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get ('searchTerm');
-    const typeFromUrl = urlParams.get ('type');
-    const parkingFromUrl = urlParams.get ('parking');
-    const furnishedFromUrl = urlParams.get ('furnished');
-    const offerFromUrl = urlParams.get ('offer');
-    const sortFromUrl = urlParams.get ('sort');
-    const orderFromUrl = urlParams.get ('order');
+    const searchTermFromUrl = urlParams.get("searchTerm");
+    const typeFromUrl = urlParams.get("type");
+    const parkingFromUrl = urlParams.get("parking");
+    const furnishedFromUrl = urlParams.get("furnished");
+    const offerFromUrl = urlParams.get("offer");
+    const sortFromUrl = urlParams.get("sort");
+    const orderFromUrl = urlParams.get("order");
 
     if (
       searchTermFromUrl ||
@@ -37,13 +37,13 @@ export default function Search() {
       orderFromUrl
     ) {
       setSidebardata({
-        searchTerm: searchTermFromUrl || '',
-        type: typeFromUrl || 'all',
-        parking: parkingFromUrl === 'true' ? true : false,
-        furnished: furnishedFromUrl === 'true' ? true : false,
-        offer: offerFromUrl === 'true' ? true : false,
-        sort: sortFromUrl || 'created_at',
-        order: orderFromUrl || 'desc',
+        searchTerm: searchTermFromUrl || "",
+        type: typeFromUrl || "all",
+        parking: parkingFromUrl === "true" ? true : false,
+        furnished: furnishedFromUrl === "true" ? true : false,
+        offer: offerFromUrl === "true" ? true : false,
+        sort: sortFromUrl || "created_at",
+        order: orderFromUrl || "desc",
       });
     }
 
@@ -57,7 +57,6 @@ export default function Search() {
     };
 
     fetchListings();
-
   }, [location.search]);
 
   const handleChange = (e) => {
@@ -95,19 +94,18 @@ export default function Search() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    const urlParams = new URLSearchParams()
-    urlParams.set('searchTerm', sidebardata.searchTerm)
-    urlParams.set('type', sidebardata.type)
-    urlParams.set('parking', sidebardata.parking)
-    urlParams.set('furnished', sidebardata.furnished)
-    urlParams.set('offer', sidebardata.offer)
-    urlParams.set('sort', sidebardata.sort)
-    urlParams.set('order', sidebardata.order)
-    const searchQuery = urlParams.toString()
+    e.preventDefault();
+    const urlParams = new URLSearchParams();
+    urlParams.set("searchTerm", sidebardata.searchTerm);
+    urlParams.set("type", sidebardata.type);
+    urlParams.set("parking", sidebardata.parking);
+    urlParams.set("furnished", sidebardata.furnished);
+    urlParams.set("offer", sidebardata.offer);
+    urlParams.set("sort", sidebardata.sort);
+    urlParams.set("order", sidebardata.order);
+    const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
-
-  }
+  };
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -215,13 +213,29 @@ export default function Search() {
         </form>
       </div>
 
-      <div className="">
+      <div className="flex-1">
         <h1
-          className="text-3xl font-semibold border-b p-3 mt-5"
+          className="text-3xl  font-semibold border-b p-3 mt-5"
           style={{ color: "rgb(30 65 113)" }}
         >
           Listing results:
         </h1>
+        <div className='p-8 flex flex-wrap gap-4'>
+          {!loading && listings.length === 0 && (
+            <p className='text-xl text-blue-900'>No listing found!</p>
+          )}
+          {loading && (
+            <p className='text-xl text-blue-900 text-center w-full'>
+              Loading...
+            </p>
+          )}
+
+          {!loading &&
+            listings &&
+            listings.map((listing) => (
+              <ListingItem key={listing._id} listing={listing} />
+            ))}
+        </div>
       </div>
     </div>
   );
