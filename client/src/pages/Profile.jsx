@@ -185,7 +185,7 @@ export default function Profile() {
           ) : filePerc > 0 && filePerc < 100 ? (
             <span className="text-blue-900">{`Uploading ${filePerc}%`}</span>
           ) : filePerc === 100 ? (
-            <span className="text-green-600">Image successfully uploaded!</span>
+            <span className="text-green-700">Image successfully uploaded!</span>
           ) : (
             ""
           )}
@@ -221,7 +221,7 @@ export default function Profile() {
         </button>
 
         <Link
-          className="bg-green-600 text-white p-3 rounded-lg uppercase text-center hover:opacity-90"
+          className="bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-90"
           to={"/create-listing"}
         >
           Create Listing
@@ -240,7 +240,7 @@ export default function Profile() {
       </div>
 
       <p className="text-red-600 mt-5">{error ? error : ""}</p>
-      <p className="text-green-600 mt-5">
+      <p className="text-green-700 mt-5">
         {updateSuccess ? "You updated your profile successfully!" : ""}
       </p>
 
