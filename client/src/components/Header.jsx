@@ -29,8 +29,8 @@ export default function Header() {
       <div className="flex justify-between items-center max-w-7xl mx-auto p-3">
         <Link to="/">
           <h1 className="font-bold text-sm sm:text-2xl flex flex-wrap">
-            <span style={{ color: "rgb(78, 161, 164)" }}>Dream</span>
-            <span style={{ color: "rgb(30 65 113)" }}>Follow</span>
+            <span className="text-blue-900">Dream</span>
+            <span className="text-teal-600">Follow</span>
           </h1>
         </Link>
         <form
