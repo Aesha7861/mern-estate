@@ -319,7 +319,7 @@ export default function CreateListing() {
           <div className="flex gap-4">
             <input
               onChange={(e) => setFiles(e.target.files)}
-              className="p-3 border border-gray-300 rounded w-1000px h-700px"
+              className="p-3 border border-gray-300 rounded w-100% h-100p%"
               type="file"
               id="images"
               accept="image/*"
