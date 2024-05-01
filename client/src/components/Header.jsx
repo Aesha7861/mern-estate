@@ -2,10 +2,11 @@ import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-
+// import logo from "../Assets/img/logo.png";
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState("");
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -28,10 +29,16 @@ export default function Header() {
     <header className="bg-slate-200 shadow-md">
       <div className="flex justify-between items-center max-w-7xl mx-auto p-3">
         <Link to="/">
-          <h1 className="font-bold text-sm sm:text-2xl flex flex-wrap">
-            <span className="text-blue-900">Dream</span>
-            <span className="text-teal-600">Follow</span>
-          </h1>
+          <div
+            style={{ height: "100%", width: "50px" }}
+            className="flex flex-raw gap-2"
+          >
+            {/* <img src={logo} className=""/> */}
+            <h1 className="font-bold text-lg sm:text-2xl flex flex-raw items-center">
+              <span className="text-blue-900">Dream</span>
+              <span className="text-teal-600">Follow</span>
+            </h1>
+          </div>
         </Link>
         <form
           onSubmit={handleSubmit}
@@ -45,24 +52,18 @@ export default function Header() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button>
-            <FaSearch style={{ color: "rgb(30 65 113)" }} />
+            <FaSearch className="text-blue-900 hover:opacity-85" />
           </button>
         </form>
         <ul className="flex gap-8">
           <Link to="/">
-            <li
-              className="font-bold hidden sm:inline hover:underline"
-              style={{ color: "rgb(30 65 113)" }}
-            >
+            <li className="font-bold hidden lg:block md:block text-blue-900 hover:underline">
               Home
             </li>
           </Link>
 
           <Link to="/about">
-            <li
-              className="font-bold hidden sm:inline hover:underline"
-              style={{ color: "rgb(30 65 113)" }}
-            >
+            <li className="font-bold hidden lg:block md:block text-blue-900 hover:underline">
               About
             </li>
           </Link>
@@ -75,15 +76,54 @@ export default function Header() {
                 alt="profile"
               />
             ) : (
-              <li
-                className="font-bold hover:underline"
-                style={{ color: "rgb(30 65 113)" }}
-              >
+              <li className="font-bold text-blue-900 hover:underline hidden lg:block md:block">
                 Sign in
               </li>
             )}
           </Link>
         </ul>
+        <div
+          className="mobile-header-container lg:hidden md:hidden cursor-pointer"
+          onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+        >
+          <i className="fa-solid fa-bars hover:opacity-85"></i>
+        </div>
+      </div>
+      {mobileSidebarOpen && <div className="backrgoundBlur"></div>}
+
+      <div
+        className={
+          mobileSidebarOpen
+            ? "mobileSidebar sidebarShow"
+            : "mobileSidebar sidebarHidden"
+        }
+      >
+        <div className="mobileHeader cursor-pointer">
+          <i
+            className="fa-solid fa-xmark hover:opacity-85"
+            onClick={() => setMobileSidebarOpen(false)}
+          ></i>
+        </div>
+        <div className="mobileBody">
+          <ul onClick={() => setMobileSidebarOpen(false)}>
+            <Link to="/">
+              <li className="font-bold text-blue-900 hover:underline">Home</li>
+            </Link>
+            <Link to="/about">
+              <li className="font-bold text-blue-900 hover:underline">About</li>
+            </Link>
+
+            <Link to="/profile">
+              {currentUser ? (
+                <></>
+              ) : (
+                <li className="font-bold text-blue-900 hover:underline">
+                  Sign in
+                </li>
+              )}
+            </Link>
+          </ul>
+        </div>
       </div>
     </header>
   );
