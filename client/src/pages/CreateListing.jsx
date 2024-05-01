@@ -51,7 +51,9 @@ export default function CreateListing() {
           setUploading(false);
         })
         .catch((err) => {
-          setImageUploadError("Image upload failed (maximum 2 mb size per image)");
+          setImageUploadError(
+            "Image upload failed (maximum 2 mb size per image)"
+          );
           setUploading(false);
         });
     } else {
@@ -155,7 +157,7 @@ export default function CreateListing() {
   };
   return (
     <main className="p-3 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">
+      <h1 className="text-3xl font-semibold text-center my-7 text-blue-900">
         Create a Listing
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
@@ -310,7 +312,7 @@ export default function CreateListing() {
           </div>
         </div>
         <div className="flex flex-col flex-1 gap-4">
-          <p className="font-semibold">
+          <p className="font-semibold text-gray-700">
             Images:
             <span className="font-normal text-gray-600 ml-2">
               The first image will be the cover (max 6)
@@ -329,7 +331,7 @@ export default function CreateListing() {
               type="button"
               disabled={uploading}
               onClick={handleImageSubmit}
-              className="p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
+              className="p-3 text-green-700 border border-green-700 rounded uppercase font-semibold hover:shadow-lg disabled:opacity-80 hover:opacity-90"
             >
               {uploading ? "Uploading..." : "Upload"}
             </button>
