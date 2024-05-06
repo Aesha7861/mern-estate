@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 // import logo from "../Assets/img/logo.png";
+
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,13 +37,13 @@ export default function Header() {
             {/* <img src={logo} className=""/> */}
             <h1 className="font-bold text-lg sm:text-2xl flex flex-raw items-center">
               <span className="text-blue-900">Dream</span>
-              <span className="text-teal-600">Follow</span>
+              <span className="text-teal-600 ">Follow</span>
             </h1>
           </div>
         </Link>
         <form
           onSubmit={handleSubmit}
-          className="bg-slate-100 p-3 rounded-lg flex items-center"
+          className="bg-slate-100 p-3 rounded-lg flex items-center "
         >
           <input
             type="text"
@@ -55,6 +56,8 @@ export default function Header() {
             <FaSearch className="text-blue-900 hover:opacity-85" />
           </button>
         </form>
+
+        <div className="hidden lg:block md:block">
         <ul className="flex gap-8">
           <Link to="/">
             <li className="font-bold hidden lg:block md:block text-blue-900 hover:underline">
@@ -82,6 +85,8 @@ export default function Header() {
             )}
           </Link>
         </ul>
+       </div> 
+        
         <div
           className="mobile-header-container lg:hidden md:hidden cursor-pointer"
           onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
