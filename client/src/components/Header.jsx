@@ -31,7 +31,7 @@ export default function Header() {
       <div className="flex justify-between items-center max-w-7xl mx-auto p-3">
         <Link to="/">
           <div
-            style={{ height: "100%", width: "50px" }}
+            style={{ height: "100%", width: "100%" }}
             className="flex flex-raw gap-2"
           >
             {/* <img src={logo} className=""/> */}
