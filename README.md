@@ -160,5 +160,5 @@ For any questions or support, please contact:
 
 **Email:** aeshagadhiya04@gmail.com
 
-**GitHub:** [DreamFollow Repository]([https://github.com/Aesha7861/mern-estate])
+**GitHub:** [DreamFollow GitHub Repository](https://github.com/Aesha7861/mern-estate)
 
